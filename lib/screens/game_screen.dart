@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/sudoku_grid.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -21,9 +22,7 @@ class _GameScreenState extends State<GameScreen> {
         title: const Text('Sudoku'),
       ),
       body: Center(
-        child: Text(
-          'Zone de jeu (${boxSize.toInt()} px)',
-        ),
+        child: SudokuGrid(boxSize: boxSize),
       ),
     );
   }
