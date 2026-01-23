@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'sudoku_block.dart';
 
 class SudokuGrid extends StatelessWidget {
   final double boxSize;
@@ -18,12 +19,13 @@ class SudokuGrid extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         children: List.generate(9, (index) {
           return Container(
-            width: boxSize,
-            height: boxSize,
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.blueAccent,
               ),
+            ),
+            child: SudokuBlock(
+              boxSize: boxSize / 3,
             ),
           );
         }),
