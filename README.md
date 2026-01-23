@@ -1,6 +1,7 @@
 # sudoku_starter
 
-Sudoku game
+Sudoku gamek
+DIALLO Abdoul Aziz
 
 ## Getting Started
 
