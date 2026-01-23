@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/sudoku_grid.dart';
+import '../services/sudoku_service.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -9,6 +10,21 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
+  final SudokuService _sudokuService = SudokuService();
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _initGame();
+  }
+
+  Future<void> _initGame() async {
+    await _sudokuService.generatePuzzle();
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +34,14 @@ class _GameScreenState extends State<GameScreen> {
     final boxSize = (maxSize / 3).ceil().toDouble();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sudoku'),
-      ),
+      appBar: AppBar(title: const Text('Sudoku')),
       body: Center(
-        child: SudokuGrid(boxSize: boxSize),
+        child: _isLoading
+            ? const CircularProgressIndicator()
+            : SudokuGrid(
+          boxSize: boxSize,
+          getCellValue: _sudokuService.getCellValue,
+        ),
       ),
     );
   }
