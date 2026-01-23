@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/sudoku_grid.dart';
 import '../services/sudoku_service.dart';
+import '../models/cell_position.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -12,6 +13,7 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
   final SudokuService _sudokuService = SudokuService();
   bool _isLoading = true;
+  CellPosition? _selectedCell;
 
   @override
   void initState() {
@@ -23,6 +25,12 @@ class _GameScreenState extends State<GameScreen> {
     await _sudokuService.generatePuzzle();
     setState(() {
       _isLoading = false;
+    });
+  }
+
+  void _onCellSelected(CellPosition position) {
+    setState(() {
+      _selectedCell = position;
     });
   }
 
@@ -41,6 +49,8 @@ class _GameScreenState extends State<GameScreen> {
             : SudokuGrid(
           boxSize: boxSize,
           getCellValue: _sudokuService.getCellValue,
+          selectedCell: _selectedCell,
+          onCellSelected: _onCellSelected,
         ),
       ),
     );

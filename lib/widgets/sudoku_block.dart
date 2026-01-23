@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'sudoku_cell.dart';
+import '../models/cell_position.dart';
 
 class SudokuBlock extends StatelessWidget {
   final double boxSize;
   final int blockIndex;
   final int Function(int x, int y) getCellValue;
+  final CellPosition? selectedCell;
+  final void Function(CellPosition position) onCellSelected;
 
   const SudokuBlock({
     super.key,
     required this.boxSize,
     required this.blockIndex,
     required this.getCellValue,
+    required this.selectedCell,
+    required this.onCellSelected,
   });
 
   @override
@@ -19,7 +24,9 @@ class SudokuBlock extends StatelessWidget {
       crossAxisCount: 3,
       physics: const NeverScrollableScrollPhysics(),
       children: List.generate(9, (cellIndex) {
+        final position = CellPosition(blockIndex, cellIndex);
         final value = getCellValue(blockIndex, cellIndex);
+        final isSelected = selectedCell == position;
 
         return Container(
           decoration: BoxDecoration(
@@ -28,7 +35,11 @@ class SudokuBlock extends StatelessWidget {
               width: 0.3,
             ),
           ),
-          child: SudokuCell(value: value),
+          child: SudokuCell(
+            value: value,
+            isSelected: isSelected,
+            onTap: () => onCellSelected(position),
+          ),
         );
       }),
     );
