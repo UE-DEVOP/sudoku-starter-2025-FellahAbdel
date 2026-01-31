@@ -2,18 +2,23 @@ import 'package:flutter/material.dart';
 
 class SudokuCell extends StatelessWidget {
   final int value;
+  final int expectedValue;
   final bool isSelected;
   final VoidCallback onTap;
 
   const SudokuCell({
     super.key,
     required this.value,
+    required this.expectedValue,
     required this.isSelected,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    final displayValue = value != 0 ? value : expectedValue;
+    final isExpected = value == 0 && expectedValue != 0;
+
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -23,11 +28,14 @@ class SudokuCell extends StatelessWidget {
               : Colors.transparent,
         ),
         child: Center(
-          child: value == 0
+          child: displayValue == 0
               ? const SizedBox.shrink()
               : Text(
-            value.toString(),
-            style: Theme.of(context).textTheme.titleLarge,
+            displayValue.toString(),
+            style: TextStyle(
+              fontSize: 20,
+              color: isExpected ? Colors.black12 : Colors.black,
+            ),
           ),
         ),
       ),

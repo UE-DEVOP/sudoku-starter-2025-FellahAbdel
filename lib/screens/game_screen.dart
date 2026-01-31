@@ -63,6 +63,7 @@ class _GameScreenState extends State<GameScreen> {
             SudokuGrid(
               boxSize: boxSize,
               getCellValue: _sudokuService.getCellValue,
+              getExpectedValue: _sudokuService.getExpectedValue,
               selectedCell: _selectedCell,
               onCellSelected: _onCellSelected,
             ),

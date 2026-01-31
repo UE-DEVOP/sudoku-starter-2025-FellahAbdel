@@ -5,6 +5,7 @@ import '../models/cell_position.dart';
 class SudokuGrid extends StatelessWidget {
   final double boxSize;
   final int Function(int x, int y) getCellValue;
+  final int Function(int x, int y) getExpectedValue;
   final CellPosition? selectedCell;
   final void Function(CellPosition position) onCellSelected;
 
@@ -12,6 +13,7 @@ class SudokuGrid extends StatelessWidget {
     super.key,
     required this.boxSize,
     required this.getCellValue,
+    required this.getExpectedValue,
     required this.selectedCell,
     required this.onCellSelected,
   });
@@ -33,6 +35,7 @@ class SudokuGrid extends StatelessWidget {
               boxSize: boxSize / 3,
               blockIndex: blockIndex,
               getCellValue: getCellValue,
+              getExpectedValue: getExpectedValue,
               selectedCell: selectedCell,
               onCellSelected: onCellSelected,
             ),

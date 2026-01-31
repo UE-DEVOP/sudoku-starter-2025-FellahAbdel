@@ -43,4 +43,13 @@ class SudokuService {
   }
 
   bool get isLoaded => _puzzle != null;
+
+  int getExpectedValue(int x, int y) {
+    return _puzzle
+        ?.solvedBoard()
+        ?.matrix()?[x][y]
+        .getValue() ??
+        0;
+  }
+
 }
