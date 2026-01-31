@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../widgets/sudoku_grid.dart';
 import '../services/sudoku_service.dart';
 import '../models/cell_position.dart';
+import '../widgets/number_pad.dart';
+
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -34,6 +36,15 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
+  void _onNumberSelected(int value) {
+    if (_selectedCell == null) return;
+
+    setState(() {
+      _sudokuService.setCellValue(_selectedCell!, value);
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height / 2;
@@ -46,11 +57,18 @@ class _GameScreenState extends State<GameScreen> {
       body: Center(
         child: _isLoading
             ? const CircularProgressIndicator()
-            : SudokuGrid(
-          boxSize: boxSize,
-          getCellValue: _sudokuService.getCellValue,
-          selectedCell: _selectedCell,
-          onCellSelected: _onCellSelected,
+            : Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SudokuGrid(
+              boxSize: boxSize,
+              getCellValue: _sudokuService.getCellValue,
+              selectedCell: _selectedCell,
+              onCellSelected: _onCellSelected,
+            ),
+            const SizedBox(height: 20),
+            NumberPad(onNumberSelected: _onNumberSelected),
+          ],
         ),
       ),
     );

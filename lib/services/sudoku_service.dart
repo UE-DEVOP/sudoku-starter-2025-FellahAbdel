@@ -1,5 +1,7 @@
 import 'package:sudoku_api/sudoku_api.dart';
 
+import '../models/cell_position.dart';
+
 class SudokuService {
   Puzzle? _puzzle;
 
@@ -18,6 +20,17 @@ class SudokuService {
         .board()
         ?.matrix()?[row][col]
         .getValue() ?? 0;
+  }
+
+  void setCellValue(CellPosition position, int value) {
+    if (_puzzle == null) return;
+
+    // On utilise les coordonnées (x, y) ou (row, col) de ton objet CellPosition
+    // pour accéder à la bonne case dans la matrice de la librairie.
+    _puzzle!
+        .board()
+        ?.matrix()?[position.block][position.cell]
+        .setValue(value);
   }
 
   int getSolutionValue(int row, int col) {
