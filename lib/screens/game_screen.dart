@@ -4,6 +4,8 @@ import '../services/sudoku_service.dart';
 import '../models/cell_position.dart';
 import '../widgets/number_pad.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import '../routes/app_routes.dart';
+
 
 
 
@@ -53,6 +55,13 @@ class _GameScreenState extends State<GameScreen> {
       setState(() {
         _sudokuService.setCellValue(pos, value);
       });
+
+      if (_sudokuService.isGridComplete()) {
+        Navigator.pushReplacementNamed(
+          context,
+          AppRoutes.end,
+        );
+      }
     } else {
       _showErrorSnackBar();
     }

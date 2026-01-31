@@ -61,5 +61,20 @@ class SudokuService {
     return expected == value;
   }
 
+  bool isGridComplete() {
+    final matrix = _puzzle?.board()?.matrix();
+    if (matrix == null) return false;
+
+    for (var block = 0; block < 9; block++) {
+      for (var cell = 0; cell < 9; cell++) {
+        if (matrix[block][cell].getValue() == 0) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+
 
 }
