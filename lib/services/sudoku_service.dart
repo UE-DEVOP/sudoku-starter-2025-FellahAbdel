@@ -52,4 +52,14 @@ class SudokuService {
         0;
   }
 
+  bool isCorrectValue(int x, int y, int value) {
+    final expected = _puzzle
+        ?.solvedBoard()
+        ?.matrix()?[x][y]
+        .getValue();
+
+    return expected == value;
+  }
+
+
 }

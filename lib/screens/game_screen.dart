@@ -3,6 +3,8 @@ import '../widgets/sudoku_grid.dart';
 import '../services/sudoku_service.dart';
 import '../models/cell_position.dart';
 import '../widgets/number_pad.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+
 
 
 class GameScreen extends StatefulWidget {
@@ -39,10 +41,41 @@ class _GameScreenState extends State<GameScreen> {
   void _onNumberSelected(int value) {
     if (_selectedCell == null) return;
 
-    setState(() {
-      _sudokuService.setCellValue(_selectedCell!, value);
-    });
+    final pos = _selectedCell!;
+
+    final isCorrect = _sudokuService.isCorrectValue(
+      pos.block,
+      pos.cell,
+      value,
+    );
+
+    if (isCorrect) {
+      setState(() {
+        _sudokuService.setCellValue(pos, value);
+      });
+    } else {
+      _showErrorSnackBar();
+    }
   }
+
+
+  void _showErrorSnackBar() {
+    final snackBar = SnackBar(
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      content: AwesomeSnackbarContent(
+        title: 'Erreur',
+        message: 'La valeur saisie est incorrecte',
+        contentType: ContentType.failure,
+      ),
+    );
+
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(snackBar);
+  }
+
 
 
   @override
